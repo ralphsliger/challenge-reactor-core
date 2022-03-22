@@ -1,19 +1,12 @@
 package com.example.demo;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import com.example.demo.models.Player;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class CSVUtilTest {
 
@@ -69,15 +62,14 @@ public class CSVUtilTest {
         Flux<Player> listFlux = Flux.fromStream(list.parallelStream()).cache();
         Mono<Map<String, Collection<Player>>> listFilter = listFlux
                 .filter(player -> player.age >= 34)
-                .filter(player -> player.club.equals("Real Madrid"))
+                .filter(player -> player.club.equals("Chelsea"))
                 .distinct()
                 .collectMultimap(Player::getClub);
-
+        System.out.println("Filtrado por victorias segun edad: ");
         listFilter.block().forEach((s, players) -> {
             System.out.println(s);
             players.forEach(player -> {
                 System.out.println(player.name + player.age);
-                assert player.club.equals("Real Madrid");
             });
         });
     }

@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.models;
+
+import java.util.List;
 
 public class Player {
     public int id;
@@ -10,7 +12,7 @@ public class Player {
     public int games;
     public String club;
 
-    public Player(){
+    public Player(List<Player> e){
 
     }
 
